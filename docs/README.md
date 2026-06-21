@@ -1,271 +1,270 @@
 # Algo User Guide
 
-Algo is a **command-line task manager** that helps users organize and track tasks efficiently.  
-It is designed for users who prefer typing commands rather than using graphical interfaces.
+Algo is a command-line task manager for users who prefer quick typed commands.
+It supports todos, deadlines, and events, and saves your task list automatically
+between sessions.
 
-Algo supports three types of tasks:
+## Quick Start
 
-- Todo tasks
-- Deadline tasks
-- Event tasks
+Run the application, then enter one command per line. Use `bye` to exit.
 
-All tasks are automatically saved so that your task list persists between sessions.
+```text
+todo read book
+deadline submit report /by 2026-09-20
+event team meeting /from 2026-09-20 1400 /to 2026-09-20 1600
+list
+bye
+```
 
----
+## Adding Todo Tasks
 
-## Adding deadlines
+Adds a task without a date or time.
 
-Adds a task that must be completed before a specific date or time.
+Format:
+
+```text
+todo <description>
+```
 
 Example:
 
-`deadline <description> /by yyyy-MM-dd [HHmm]`
-
-Example usage:
-
-`deadline submit report /by 2026-09-20`
-
-`deadline project meeting /by 2026-09-20 1800`
+```text
+todo read book
+```
 
 Expected outcome:
 
+```text
+Got it. I've added this task:
+[T][ ] read book
+Now you have 1 tasks in the list.
 ```
+
+## Adding Deadlines
+
+Adds a task that must be completed by a date, with an optional time.
+
+Format:
+
+```text
+deadline <description> /by yyyy-MM-dd [HHmm]
+```
+
+Examples:
+
+```text
+deadline submit report /by 2026-09-20
+deadline project meeting /by 2026-09-20 1800
+```
+
+Expected outcome:
+
+```text
 Got it. I've added this task:
 [D][ ] submit report (by: Sep 20 2026)
 Now you have 1 tasks in the list.
 ```
 
----
+## Adding Events
 
-## Adding todo tasks
+Adds a task that happens between a start date/time and an end date/time. The end
+must be after the start.
 
-Adds a simple task without any date or time constraints.
+Format:
+
+```text
+event <description> /from yyyy-MM-dd [HHmm] /to yyyy-MM-dd [HHmm]
+```
 
 Example:
 
-`todo <description>`
-
-Example usage:
-
-`todo read book`
+```text
+event team meeting /from 2026-09-20 1400 /to 2026-09-20 1600
+```
 
 Expected outcome:
 
-```
+```text
 Got it. I've added this task:
-[T][ ] read book
+[E][ ] team meeting (from: Sep 20 2026 14:00 to: Sep 20 2026 16:00)
 Now you have 1 tasks in the list.
 ```
 
----
+## Listing Tasks
 
-## Adding events
+Displays all stored tasks.
 
-Adds a task that occurs within a time period.
+Format:
 
-Example:
-
-`event <description> /from yyyy-MM-dd [HHmm] /to yyyy-MM-dd [HHmm]`
-
-Example usage:
-
-`event team meeting /from 2026-09-20 1400 /to 2026-09-20 1600`
+```text
+list
+```
 
 Expected outcome:
 
-```
-Got it. I've added this task:
-[E][ ] team meeting (from: Sep 20 2026 14:00 to: Sep 20 2026 16:00)
-```
-
----
-
-## Listing tasks
-
-Displays all tasks currently stored.
-
-Example:
-
-`list`
-
-Expected outcome:
-
-```
+```text
 Here are the tasks in your list:
-1. [T][ ] read book
-2. [D][ ] submit report
+1.[T][ ] read book
+2.[D][ ] submit report (by: Sep 20 2026)
 ```
 
----
+If there are no tasks, Algo displays:
 
-## Marking tasks as done
+```text
+No tasks yet
+```
 
-Marks a task as completed.
+## Marking Tasks
+
+Marks a task as done.
+
+Format:
+
+```text
+mark <task number>
+```
 
 Example:
 
-`mark <task number>`
-
-Example usage:
-
-`mark 2`
+```text
+mark 2
+```
 
 Expected outcome:
 
-```
+```text
 Nice! I've marked this task as done:
-[D][X] submit report
+[D][X] submit report (by: Sep 20 2026)
 ```
 
----
-
-## Unmarking tasks
+## Unmarking Tasks
 
 Marks a completed task as not done.
 
-Example:
+Format:
 
-`unmark <task number>`
+```text
+unmark <task number>
+```
 
----
+Expected outcome:
 
-## Deleting tasks
+```text
+OK, I've marked this task as not done yet:
+[D][ ] submit report (by: Sep 20 2026)
+```
+
+## Deleting Tasks
 
 Removes a task from the list.
 
+Format:
+
+```text
+delete <task number>
+```
+
 Example:
 
-`delete <task number>`
-
-Example usage:
-
-`delete 1`
+```text
+delete 1
+```
 
 Expected outcome:
 
-```
+```text
 Noted. I've removed this task:
-[T][ ] read book
+  [T][ ] read book
 Now you have 1 tasks in the list.
 ```
 
----
+## Finding Tasks
 
-## Finding tasks
+Searches task descriptions for a keyword. Search is case-insensitive.
 
-Searches for tasks that contain a specific keyword.
+Format:
+
+```text
+find <keyword>
+```
 
 Example:
 
-`find <keyword>`
-
-Example usage:
-
-`find report`
+```text
+find report
+```
 
 Expected outcome:
 
-```
+```text
 Here are the matching tasks in your list:
-1. [D][ ] submit report
+1.[D][ ] submit report (by: Sep 20 2026)
 ```
 
----
+If there are no matches, Algo displays:
 
-## Exiting the program
+```text
+No matching tasks found.
+```
+
+## Exiting
 
 Closes the application.
 
-Example:
+Format:
 
-`bye`
+```text
+bye
+```
 
 Expected outcome:
 
-```
+```text
 Bye. Hope to see you again soon!
 ```
 
----
+## Storage
 
-## FAQ
+Tasks are saved automatically in:
 
-**Q: What happens if the save file is deleted?**
-
-Algo will start with an empty task list the next time it runs. A new save file will be created automatically.
-
-**Q: Where are my tasks stored?**
-
-Tasks are automatically saved in:
-
-`data/algo.txt`
-
-This file is created automatically when Algo runs.
-
-**Q: Can I edit the save file manually?**
-
-Yes, but it is not recommended. If the formatting is incorrect, Algo may treat the save file as corrupted.
-
----
-
-## Known Issues
-
-**Issue: Invalid task numbers**
-
-If a task number that does not exist is entered, Algo will display an error message.
-
-Example:
-
-```
-Invalid task number.
+```text
+data/algo.txt
 ```
 
----
+If the save file is deleted, Algo starts with an empty task list and creates a
+new save file the next time tasks are saved.
 
-**Issue: Incorrect date format**
+Manual edits to the save file are not recommended. If the file format is
+invalid, Algo displays:
 
-Dates must follow this format:
-
-`yyyy-MM-dd`
-
-Optional time format:
-
-`HHmm`
-
-Example:
-
+```text
+Warning: Could not load tasks from storage.
 ```
-deadline submit report /by 2026-09-20 1800
-```
-
-If the format is incorrect, Algo will show a usage message.
-
----
-
-**Issue: Corrupted save file**
-
-If the save file format is modified incorrectly, Algo may display:
-
-```
-Save file is corrupted.
-```
-
-In this case, the application will start with an empty task list.
-
----
 
 ## Command Summary
 
-| Command        | Format                                                              |
-|----------------|---------------------------------------------------------------------|
-| List tasks     | `list`                                                              |
-| Add todo       | `todo <description>`                                                |
-| Add deadline   | `deadline <description> /by yyyy-MM-dd [HHmm]`                      |
-| Add event      | `event <description> /from yyyy-MM-dd [HHmm] /to yyyy-MM-dd [HHmm]` |
-| Mark task      | `mark <task number>`                                                |
-| Unmark task    | `unmark <task number>`                                              |
-| Delete task    | `delete <task number>`                                              |
-| Find tasks     | `find <keyword>`                                                    |
-| Exit program   | `bye`                                                               |
+| Action | Format |
+| --- | --- |
+| List tasks | `list` |
+| Add todo | `todo <description>` |
+| Add deadline | `deadline <description> /by yyyy-MM-dd [HHmm]` |
+| Add event | `event <description> /from yyyy-MM-dd [HHmm] /to yyyy-MM-dd [HHmm]` |
+| Mark task | `mark <task number>` |
+| Unmark task | `unmark <task number>` |
+| Delete task | `delete <task number>` |
+| Find tasks | `find <keyword>` |
+| Exit program | `bye` |
 
----
+## Common Errors
+
+| Scenario | Message |
+| --- | --- |
+| Unknown command | `Invalid command.` |
+| Empty todo description | `The description of a todo cannot be empty.` |
+| Missing task number | `Please specify a task number.` |
+| Non-numeric task number | `Task number must be a number.` |
+| Task number outside the list | `Invalid task number.` |
+| Missing find keyword | `Usage: find <keyword>` |
+| Deadline format issue | `Usage: deadline <desc> /by yyyy-MM-dd [HHmm]` |
+| Event format issue | `Usage: event <desc> /from yyyy-MM-dd [HHmm] /to yyyy-MM-dd [HHmm]` |
+| Event end is not after start | `Event end time must be after start time.` |

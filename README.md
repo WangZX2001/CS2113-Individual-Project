@@ -1,28 +1,89 @@
-#  Algo project template
+# Algo
 
-This is a project template for a greenfield Java project. It's named Algo_. Given below are instructions on how to use it.
+Algo is a command-line task manager written in Java. It helps you keep track of
+todos, deadlines, and events through typed commands, and automatically saves
+your task list between sessions.
 
-## Setting up in Intellij
+This repository is maintained as a CS2113 individual project.
 
-Prerequisites: JDK 17, update Intellij to the most recent version.
+## Features
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 17** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-1. After that, locate the `src/main/java/Algo.java` file, right-click it, and choose `Run Algo.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-     ___    _      ____   ___
-    / _ \  | |    / ___| / _ \
-   / /_\ \ | |   | |  _ | | | |
-   |  _  | | |___| |_| || |_| |
-   |_| |_| |_____\____/  \___/
+- Add todo, deadline, and event tasks
+- List all saved tasks
+- Mark and unmark tasks as done
+- Delete tasks by task number
+- Search tasks by keyword
+- Persist tasks in a local save file
 
-   Hello! I'm ALGO
-   What can I do for you?
-   ```
+## Requirements
 
-**Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+- JDK 17 or later
+- A terminal or an IDE such as IntelliJ IDEA
+
+## Project Structure
+
+```text
+src/main/java/algo/          Main application classes
+src/main/java/algo/command/  Command implementations
+src/main/java/algo/task/     Task models
+docs/README.md               User guide
+text-ui-test/                Legacy text UI test fixtures
+```
+
+The application entry point is `algo.Algo`.
+
+## Running the Application
+
+From the repository root:
+
+```powershell
+New-Item -ItemType Directory -Force bin
+javac -cp src/main/java -d bin src/main/java/algo/*.java src/main/java/algo/command/*.java src/main/java/algo/task/*.java
+java -cp bin algo.Algo
+```
+
+On startup, Algo shows a welcome message and waits for commands.
+
+## Command Summary
+
+| Action | Command format |
+| --- | --- |
+| List tasks | `list` |
+| Add todo | `todo <description>` |
+| Add deadline | `deadline <description> /by yyyy-MM-dd [HHmm]` |
+| Add event | `event <description> /from yyyy-MM-dd [HHmm] /to yyyy-MM-dd [HHmm]` |
+| Mark task as done | `mark <task number>` |
+| Mark task as not done | `unmark <task number>` |
+| Delete task | `delete <task number>` |
+| Find tasks | `find <keyword>` |
+| Exit | `bye` |
+
+Dates must use `yyyy-MM-dd`. Times are optional and use 24-hour `HHmm`
+format, for example `2026-09-20 1800`.
+
+## Example Commands
+
+```text
+todo read book
+deadline submit report /by 2026-09-20
+deadline project meeting /by 2026-09-20 1800
+event team meeting /from 2026-09-20 1400 /to 2026-09-20 1600
+list
+mark 2
+find report
+delete 1
+bye
+```
+
+## Storage
+
+Algo saves tasks to `data/algo.txt`. The `data` directory and save file are
+created automatically when tasks are saved.
+
+If the save file is missing, Algo starts with an empty task list. If the save
+file cannot be read or has invalid formatting, Algo shows a loading warning and
+starts with an empty task list.
+
+## More Documentation
+
+See [docs/README.md](docs/README.md) for the full user guide with examples.
